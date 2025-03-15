@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "764866193863",
+    "firebase_url": "https://inv-avanthi-2025-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "inv-avanthi-2025",
+    "storage_bucket": "inv-avanthi-2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764866193863:android:03b723fbbf1694f8c1d1e2",
+        "android_client_info": {
+          "package_name": "com.example.smart_iot_app2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB81a8TrzTt7nP2oIMP7HUR4aQP39F7CE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

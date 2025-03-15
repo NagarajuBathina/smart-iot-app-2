@@ -25,30 +25,31 @@ class CustomTextField extends StatefulWidget {
   final String? titleText;
   final double? width;
   final FocusNode? focusNode;
-  const CustomTextField(
-      {super.key,
-      this.initialValue,
-      this.labelText,
-      this.hintText,
-      this.controller,
-      this.validators,
-      this.onChanged,
-      this.onSaved,
-      this.obscureText = false,
-      this.readOnly = false,
-      this.textInputType = TextInputType.text,
-      this.textInputAction = TextInputAction.next,
-      this.onTap,
-      this.prefixicon,
-      this.suffixicon,
-      this.prefixText,
-      this.maxLines = 1,
-      this.maxLength = 128,
-      this.color,
-      this.gradient,
-      this.titleText,
-      this.width,
-      this.focusNode});
+  const CustomTextField({
+    super.key,
+    this.initialValue,
+    this.labelText,
+    this.hintText,
+    this.controller,
+    this.validators,
+    this.onChanged,
+    this.onSaved,
+    this.obscureText = false,
+    this.readOnly = false,
+    this.textInputType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
+    this.onTap,
+    this.prefixicon,
+    this.suffixicon,
+    this.prefixText,
+    this.maxLines = 1,
+    this.maxLength = 128,
+    this.color,
+    this.gradient,
+    this.titleText,
+    this.width,
+    this.focusNode,
+  });
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -72,7 +73,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               style: const TextStyle(
                   color: mBlackColor,
                   fontWeight: FontWeight.w500,
-                  fontSize: 20),
+                  fontSize: 14),
             ),
             TextFormField(
               obscureText: widget.obscureText,
@@ -90,8 +91,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
               style: const TextStyle(color: mBlackColor),
               validator: (value) => Validator.compose(value, widget.validators),
               decoration: InputDecoration(
-                // filled: true,
-                // fillColor: Colors.white.withOpacity(0.3),
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 14, horizontal: 0),
                 hintText: widget.hintText,
@@ -99,9 +98,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     color: mBlackColor,
                     fontWeight: FontWeight.w400,
                     fontSize: 18),
-                //labelText: widget.labelText,
                 prefixIcon: widget.prefixicon,
                 suffixIcon: widget.suffixicon,
+                suffixText: 'ML',
+                suffixStyle: const TextStyle(fontSize: 14),
                 suffixIconColor: mBlackColor,
                 prefixText: widget.prefixText,
                 prefixStyle: const TextStyle(color: mTitleColor, fontSize: 16),
@@ -167,10 +167,11 @@ class OutlinedDropdown<T> extends StatelessWidget {
             style: TextStyle(
                 color: mPrimaryColor,
                 fontWeight: FontWeight.w500,
-                fontSize: 20),
+                fontSize: 14),
           ),
           DropdownButtonFormField<T>(
             // dropdownColor: const Color(0xFF2B2C2E),
+
             value: value,
             validator: (value) {
               if (T == String) {
