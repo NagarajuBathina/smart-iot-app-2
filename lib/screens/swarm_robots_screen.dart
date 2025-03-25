@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 
 class SwarmRobotsScreen extends StatefulWidget {
   const SwarmRobotsScreen({super.key});
@@ -14,7 +15,7 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
 
   double _robot1Temperature = 0.0;
   double _robot1Humidity = 0.0;
-  double _robot2Temperature = 0.0;
+  double _robot2Moisture = 0.0;
 
   @override
   void initState() {
@@ -24,21 +25,28 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
 
   void _getSnapshotData() async {
     FirebaseFirestore.instance
-        .collection('test1')
-        .doc('0Hvf1CZFwwvivKwstCt8')
+        .collection('my_collection')
+        .doc('test_doc')
         .snapshots()
         .listen((event) {
       setState(() {
         var data = event.data();
         if (data != null) {
           _robot1Active = data['robot1Active'] ?? true;
-          _robot2Active = data['robot2Active'] ?? false;
-          _robot1Temperature = data['robot1Temperature'] ?? 0.0;
-          _robot1Humidity = data['robot1Humidity'] ?? 0.0;
-          _robot2Temperature = data['robot2Temperature'] ?? 0.0;
+          _robot2Active = data['robot2Active'] ?? true;
+          _robot1Temperature = data['temperature'] ?? 0.0;
+          _robot1Humidity = data['humidity'] ?? 0.0;
+          _robot2Moisture = data['moisture'] ?? 0.0;
         }
       });
     }, onError: (error) => print("Listen failed: $error"));
+  }
+
+  void _updateValues({required String key, required double value}) async {
+    await FirebaseFirestore.instance
+        .collection('my_collection')
+        .doc('test_doc')
+        .update({key: value});
   }
 
   @override
@@ -60,11 +68,10 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
                 humidity: _robot1Humidity,
               ),
               const SizedBox(height: 16),
-              _buildRobotStatusCard(
-                robotName: 'Robot 2',
-                isActive: _robot2Active,
-                temperature: _robot2Temperature,
-              ),
+              _buildRobotStatusCard2(
+                  robotName: 'Robot 2',
+                  isActive: _robot2Active,
+                  moisture: _robot2Moisture),
             ],
           ),
         ),
@@ -94,7 +101,10 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Vibration.vibrate(duration: 100, amplitude: 128);
+                      _updateValues(key: 'temperature', value: 20.9);
+                    },
                     icon: const CircleAvatar(
                       child: Icon(
                         Icons.send_rounded,
@@ -123,13 +133,70 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
               'Temperature: $temperature°C',
               style: const TextStyle(fontSize: 16),
             ),
-            if (humidity != null) ...[
-              const SizedBox(height: 8),
-              Text(
-                'Humidity: $humidity%',
-                style: const TextStyle(fontSize: 16),
-              ),
-            ],
+            const SizedBox(height: 8),
+            Text(
+              'Humidity: $humidity%',
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRobotStatusCard2({
+    required String robotName,
+    required bool isActive,
+    required double moisture,
+  }) {
+    return Card(
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  robotName,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                    onPressed: () {
+                      Vibration.vibrate(duration: 100, amplitude: 128);
+                      _updateValues(key: 'moisture', value: 22);
+                    },
+                    icon: const CircleAvatar(
+                      child: Icon(
+                        Icons.send_rounded,
+                      ),
+                    ))
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Text(
+                  'Status: ',
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  isActive ? 'Active' : 'Inactive',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isActive ? Colors.green : Colors.red,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Moisture: $moisture',
+              style: const TextStyle(fontSize: 16),
+            ),
           ],
         ),
       ),
