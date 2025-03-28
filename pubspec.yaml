@@ -44,6 +44,7 @@ dependencies:
   cloud_firestore: ^4.9.1
   intl: ^0.17.0
   flutter_dotenv:
+  flutter_timer_countdown: ^1.0.7
 
 dev_dependencies:
   flutter_test:

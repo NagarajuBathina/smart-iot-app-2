@@ -49,6 +49,31 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
         .update({key: value});
   }
 
+//  Expanded(
+//                     flex: 1,
+//                     child: OutlinedDropdown(
+//                       titleText: 'Dosages',
+//                       items: List.generate(3, (index) => index + 1)
+//                           .map((number) => DropdownMenuItem(
+//                                 value: number,
+//                                 child: Text(number.toString()),
+//                               ))
+//                           .toList(),
+//                       value: _selectedNumber,
+//                       onChanged:
+//                           _totalInfusionController.text.isEmpty || _isFreezed
+//                               ? null
+//                               : (value) {
+//                                   if (value != null) {
+//                                     setState(() {
+//                                       _selectedNumber = value as int;
+//                                       _updateTextFields(value);
+//                                     });
+//                                   }
+//                                 },
+//                     ),
+//                   )
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

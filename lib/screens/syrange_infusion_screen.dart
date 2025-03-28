@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_iot_app2/app/extensions.dart';
 import 'package:smart_iot_app2/components/custom_textfield.dart';
 
 class SyrangeInfusinoScreen extends StatefulWidget {

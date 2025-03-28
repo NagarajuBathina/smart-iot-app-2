@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_iot_app2/screens/midecine_dispanser.dart';
 import 'package:smart_iot_app2/screens/swarm_robots_screen.dart';
 import 'package:smart_iot_app2/screens/syrange_infusion_screen.dart';
 import 'package:smart_iot_app2/screens/trash_collector_screen.dart';
@@ -13,11 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Color> _bgColor = [buttonColor, limeColor, greenColor];
+  final List<Color> _bgColor = [buttonColor, limeColor, greenColor, blueColor];
   final List<String> _screenNames = [
     'Syrange Infusion',
     'Swarm Robots',
-    'Water Trash Collector'
+    'Water Trash Collector',
+    "Medicine Dispenser"
   ];
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2),
-          itemCount: 3,
+          itemCount: _screenNames.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
@@ -46,6 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       MaterialPageRoute(
                           builder: (context) =>
                               const WaterTrashCollectorScreen()));
+                } else if (index == 3) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const MedicineDispenserScreen()));
                 }
               },
               child: Container(
