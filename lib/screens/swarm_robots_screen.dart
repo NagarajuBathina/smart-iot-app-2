@@ -29,14 +29,15 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
         .doc('test_doc')
         .snapshots()
         .listen((event) {
+      if (!mounted) return;
       setState(() {
         var data = event.data();
         if (data != null) {
           _robot1Active = data['robot1Active'] ?? true;
           _robot2Active = data['robot2Active'] ?? true;
-          _robot1Temperature = data['temperature'] ?? 0.0;
-          _robot1Humidity = data['humidity'] ?? 0.0;
-          _robot2Moisture = data['moisture'] ?? 0.0;
+          _robot1Temperature = (data['temperature'] ?? 0.0).toDouble();
+          _robot1Humidity = (data['humidity'] ?? 0.0).toDouble();
+          _robot2Moisture = (data['moisture'] ?? 0.0).toDouble();
         }
       });
     }, onError: (error) => print("Listen failed: $error"));
@@ -48,31 +49,6 @@ class _SwarmRobotsScreenState extends State<SwarmRobotsScreen> {
         .doc('test_doc')
         .update({key: value});
   }
-
-//  Expanded(
-//                     flex: 1,
-//                     child: OutlinedDropdown(
-//                       titleText: 'Dosages',
-//                       items: List.generate(3, (index) => index + 1)
-//                           .map((number) => DropdownMenuItem(
-//                                 value: number,
-//                                 child: Text(number.toString()),
-//                               ))
-//                           .toList(),
-//                       value: _selectedNumber,
-//                       onChanged:
-//                           _totalInfusionController.text.isEmpty || _isFreezed
-//                               ? null
-//                               : (value) {
-//                                   if (value != null) {
-//                                     setState(() {
-//                                       _selectedNumber = value as int;
-//                                       _updateTextFields(value);
-//                                     });
-//                                   }
-//                                 },
-//                     ),
-//                   )
 
   @override
   Widget build(BuildContext context) {
