@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_iot_app2/app/constants.dart';
 import 'package:smart_iot_app2/app/extensions.dart';
 import 'package:smart_iot_app2/app/validators.dart';
 import 'package:smart_iot_app2/components/custom_textfield.dart';
@@ -163,10 +164,10 @@ class _SyrangeInfusinoScreenState extends State<SyrangeInfusinoScreen> {
 
 //update the specific field in the doc
   void _updateSpecificField(int index) async {
-    int sValue = _controllers[index].text.isNotEmpty
-        ? int.parse(_controllers[index].text)
-        : 0;
-    Map<String, int> fields = {'S': sValue, 'U': 1};
+    // int sValue = _controllers[index].text.isNotEmpty
+    //     ? int.parse(_controllers[index].text)
+    //     : 0;
+    Map<String, int> fields = {'S': index + 1, 'U': 1};
 
     await FirebaseFirestore.instance
         .collection('my_collection2')
@@ -224,6 +225,22 @@ class _SyrangeInfusinoScreenState extends State<SyrangeInfusinoScreen> {
             key: _formKey,
             child: Column(
               children: [
+                if (_isFreezed) ...[
+                  const SizedBox(height: 16),
+                  Text(
+                    '$_currentCountdownIndex Timers completed out of $_selectedNumber',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _formatTime(_remainingSeconds),
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: defaultPadding),
+                ],
                 Row(
                   children: [
                     Expanded(
@@ -309,21 +326,6 @@ class _SyrangeInfusinoScreenState extends State<SyrangeInfusinoScreen> {
                   ElevatedButton(
                     onPressed: _isFreezed ? null : _handleSubmit,
                     child: const Text('Submit'),
-                  ),
-                ],
-                if (_isFreezed) ...[
-                  const SizedBox(height: 16),
-                  Text(
-                    '$_currentCountdownIndex Timers completed out of $_selectedNumber',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _formatTime(_remainingSeconds),
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
                   ),
                 ],
               ],
