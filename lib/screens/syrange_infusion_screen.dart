@@ -189,7 +189,7 @@ class _SyrangeInfusinoScreenState extends State<SyrangeInfusinoScreen> {
       'N': _selectedNumber,
       'TFluid': int.parse(_totalInfusionController.text),
       'S': 0,
-      'U': 0
+      'U': 1
     };
 
     await FirebaseFirestore.instance
