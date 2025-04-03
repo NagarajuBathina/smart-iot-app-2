@@ -217,6 +217,16 @@ class _SyrangeInfusinoScreenState extends State<SyrangeInfusinoScreen> {
       appBar: AppBar(
         title: const Text('Syrange Infusion'),
         titleSpacing: 0,
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseFirestore.instance
+                    .collection('my_collection2')
+                    .doc('test_doc')
+                    .update({'S': 5});
+              },
+              icon: const Icon(Icons.replay_5_sharp))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
